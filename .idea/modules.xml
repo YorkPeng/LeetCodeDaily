@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/LeetCode0520/LeetCode0520.iml" filepath="$PROJECT_DIR$/LeetCode0520/LeetCode0520.iml" />
+      <module fileurl="file://$PROJECT_DIR$/0520/0520.iml" filepath="$PROJECT_DIR$/0520/0520.iml" />
+      <module fileurl="file://$PROJECT_DIR$/0524/0524.iml" filepath="$PROJECT_DIR$/0524/0524.iml" />
       <module fileurl="file://$PROJECT_DIR$/LeetCodeDaily.iml" filepath="$PROJECT_DIR$/LeetCodeDaily.iml" />
     </modules>
   </component>
