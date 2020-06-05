@@ -14,6 +14,8 @@
       <module fileurl="file://$PROJECT_DIR$/0602/0602.iml" filepath="$PROJECT_DIR$/0602/0602.iml" />
       <module fileurl="file://$PROJECT_DIR$/0603/0603.iml" filepath="$PROJECT_DIR$/0603/0603.iml" />
       <module fileurl="file://$PROJECT_DIR$/0604/0604.iml" filepath="$PROJECT_DIR$/0604/0604.iml" />
+      <module fileurl="file://$PROJECT_DIR$/0605/0605.iml" filepath="$PROJECT_DIR$/0605/0605.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JianZhiOffer/JianZhiOffer.iml" filepath="$PROJECT_DIR$/JianZhiOffer/JianZhiOffer.iml" />
       <module fileurl="file://$PROJECT_DIR$/LeetCodeDaily.iml" filepath="$PROJECT_DIR$/LeetCodeDaily.iml" />
     </modules>
   </component>
