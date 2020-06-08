@@ -27,7 +27,7 @@ public class No1 {
 
     public static void main(String[] args) {
         No1 main = new No1();
-        System.out.println(Arrays.toString(main.getLeastNumbers(new int[]{0,0,0,2,0,5}, 0)));
+        System.out.println(main.lengthOfLongestSubstring("abcabcbb"));
     }
 
     /**
@@ -255,5 +255,185 @@ public class No1 {
             backTracking(res, root.right, temp, sum - root.right.val);
             temp.remove(temp.size() - 1);
         }
+    }
+
+    public String[] permutation(String s) {
+        Set<String> res = new HashSet<>();
+        char[] str = s.toCharArray();
+        backTracking2(res,str,new StringBuffer(), new boolean[s.length()]);
+        String[] temp = new String[res.size()];
+        res.toArray(temp);
+        return temp;
+    }
+
+    public void backTracking2(Set<String> res, char[] str, StringBuffer stringBuffer, boolean[] visited){
+        if(stringBuffer.length() == str.length){
+            res.add(new String(stringBuffer));
+            return;
+        }
+        for(int i = 0; i < str.length; i++){
+            if(!visited[i]){
+                stringBuffer.append(str[i]);
+                visited[i] = true;
+                backTracking2(res,str,stringBuffer,visited);
+                stringBuffer.deleteCharAt(stringBuffer.length()-1);
+                visited[i] = false;
+            }
+        }
+    }
+
+    public int translateNum(int num) {
+        //动态规划题，这个做的不好。
+        //首先先把数字转成字符串，看看有多少位
+        String str = String.valueOf(num);
+        int[] dp = new int[str.length()+1];
+        //dp[1]的值绝对就是1，因为它存在0-9之间，所以绝对是为1.
+        //dp[0]这个值比较难搞，主要是这个铺垫，我是看了大佬的题解才懂的，是一个反推法得出的结论.
+        dp[0] = 1;
+        dp[1] = 1;
+        for(int i = 2; i < dp.length; i++){
+            //每次都从字符串中裁剪两位出来
+            String temp = str.substring(i-2,i);
+            //如果它大于等于10并且小于等于25的话，它的翻译方法就有dp[i-2]+dp[i-1]个方法，因为他可以单独翻译一位或者两位。
+            if(Integer.parseInt(temp) >= 10 && Integer.parseInt(temp) <= 25){
+                dp[i] = dp[i-2]+dp[i-1];
+            }else{
+                //否则，它可能是以0开头的，或者大于25的。它们的共同点都是只能翻译最后一位的数字，所以只能等于dp[i-1]
+                dp[i] = dp[i-1];
+            }
+        }
+        return dp[dp.length-1];
+    }
+
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        StringBuffer res = dfs(root,new StringBuffer());
+        res.deleteCharAt(res.length()-1);
+        return res.toString();
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        String[] str = data.split(",");
+        LinkedList<String> temp = new LinkedList<>(Arrays.asList(str));
+        TreeNode root = dfs2(temp);
+        return root;
+    }
+
+    public StringBuffer dfs(TreeNode root, StringBuffer stringBuffer){
+        if(root == null){
+            stringBuffer.append("#,");
+            return stringBuffer;
+        }
+        stringBuffer.append(root.val);
+        stringBuffer.append(",");
+        StringBuffer sb = dfs(root.left,stringBuffer);
+        StringBuffer sb2 = dfs(root.right,sb);
+        return sb2;
+    }
+
+    public TreeNode dfs2(LinkedList<String> data){
+        if("#".equals(data.get(0))){
+            data.remove(0);
+            return null;
+        }
+        TreeNode root = new TreeNode(Integer.parseInt(data.remove(0)));
+        root.left = dfs2(data);
+        root.right = dfs2(data);
+        return root;
+    }
+
+    public boolean verifyPostorder(int[] postorder) {
+        if(postorder.length == 0){
+            return true;
+        }
+        int root = postorder[postorder.length-1];
+        int left = 0;
+        while(left < postorder.length-1){
+            if(postorder[left] > root){
+                break;
+            }
+            left++;
+        }
+        for(int i = left; i < postorder.length-1; i++){
+            if(postorder[i] < root){
+                return false;
+            }
+        }
+        return verifyPostorder(Arrays.copyOfRange(postorder,0,left)) && verifyPostorder(Arrays.copyOfRange(postorder,left,postorder.length-1));
+    }
+
+    /**
+     * 面试题13. 机器人的运动范围
+     * @param m
+     * @param n
+     * @param k
+     * @return
+     */
+    public int movingCount(int m, int n, int k) {
+        return backTracking(m,n,0,0,k, new boolean[m][n]);
+    }
+
+    public int backTracking(int m, int n, int i, int j, int k, boolean[][] visited){
+        if(i < 0 || j < 0 || i >= m || j >= n || visited[i][j]){
+            return 0;
+        }
+        int count = 0;
+        int a = i;
+        int b = j;
+        while(a != 0){
+            count += a % 10;
+            a /= 10;
+        }
+        while(b != 0){
+            count += b % 10;
+            b /= 10;
+        }
+        if (count > k){
+            return 0;
+        }
+        int res = 1;
+        visited[i][j] = true;
+        res += backTracking(m,n,i,j-1,k,visited);
+        res += backTracking(m,n,i,j+1,k,visited);
+        res += backTracking(m,n,i-1,j,k,visited);
+        res += backTracking(m,n,i+1, j,  k,visited);
+        return res;
+    }
+
+    /**
+     * 面试题48. 最长不含重复字符的子字符串
+     * @param s
+     * @return
+     */
+    public int lengthOfLongestSubstring(String s) {
+        int slow = 0;
+        HashMap<Character, Integer> map = new HashMap<>();
+        int max = 0;
+        //这次做的时候忘记迭代器的下标是i了，尴尬。
+        for(int i = 0; i < s.length(); i++){
+            //维护一个滑动窗口，如果遇到重复元素，慢指针直接跳到重复元素的下一个下标
+            if(map.containsKey(s.charAt(i))){
+                slow = Math.max(map.get(s.charAt(i)) + 1, slow);
+            }
+            map.put(s.charAt(i),i);
+            max = Math.max(max, i - slow + 1);
+        }
+        return max;
+    }
+
+    public String reverseWords(String s) {
+        s = s.trim();
+        StringBuffer sb = new StringBuffer(s);
+        sb = sb.reverse();
+        String[] str = sb.toString().split(" ");
+        StringBuffer res = new StringBuffer();
+        for(int i = 0; i < str.length; i++) {
+            if("".equals(str[i])){
+                continue;
+            }
+            res.append(new StringBuffer(str[i]).reverse().toString());
+        }
+        return res.toString();
     }
 }
