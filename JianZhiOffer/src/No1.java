@@ -27,7 +27,7 @@ public class No1 {
 
     public static void main(String[] args) {
         No1 main = new No1();
-        System.out.println(Arrays.deepToString(main.findContinuousSequence(9)));
+        System.out.println(Arrays.toString(main.getLeastNumbers(new int[]{0,0,0,2,0,5}, 0)));
     }
 
     /**
@@ -130,5 +130,130 @@ public class No1 {
             res[i] = list.get(i);
         }
         return res;
+    }
+
+    public char firstUniqChar(String s) {
+        char res = ' ';
+        for(int i = 0; i < s.length(); i++){
+            if(s.indexOf(s.charAt(i)) == i && s.lastIndexOf(s.charAt(i),i+1) == -1){
+                res = s.charAt(i);
+                break;
+            }
+        }
+        return res;
+    }
+
+    public List<List<Integer>> levelOrder2(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        if(root == null){
+            return res;
+        }
+        queue.add(root);
+        while(!queue.isEmpty()){
+            int length = queue.size();
+            List<Integer> temp = new ArrayList<>();
+            for(int i = 0; i < length; i++){
+                TreeNode node = queue.remove();
+                if(node.left != null){
+                    queue.add(node.left);
+                }
+                if(node.right != null){
+                    queue.add(node.right);
+                }
+                if((res.size() & 1) == 0){
+                    temp.add(node.val);
+                }else{
+                    temp.add(0,node.val);
+                }
+            }
+            res.add(temp);
+        }
+        return res;
+    }
+
+    public int[] getLeastNumbers(int[] arr, int k) {
+        int left = 0;
+        int right = arr.length-1;
+        while(true){
+            int index = findKth(arr,left,right);
+            if(index == k-1){
+                break;
+            }else if(index > k-1){
+                right = index-1;
+            }else{
+                left = index + 1;
+            }
+        }
+        return Arrays.copyOfRange(arr,0,k);
+    }
+
+    public int findKth(int[] arr, int left, int right){
+        int l = left;
+        int r = right;
+        int target = arr[left];
+        while(l < r){
+            while(l < r && arr[r] > target){
+                r--;
+            }
+            while (l < r && arr[l] <= target){
+                l++;
+            }
+            if(l >= r){
+                break;
+            }
+            int temp = arr[r];
+            arr[r] = arr[l];
+            arr[l] = temp;
+        }
+        arr[left] = arr[r];
+        arr[r] = target;
+        return r;
+    }
+
+    public boolean validateStackSequences(int[] pushed, int[] popped) {
+        List<Integer> stack = new LinkedList<>();
+        int j = 0;
+        for (int value : pushed) {
+            stack.add(value);
+            while (!stack.isEmpty() && stack.get(stack.size() - 1) == popped[j]) {
+                stack.remove(stack.size() - 1);
+                j++;
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        List<List<Integer>> res = new ArrayList<>();
+        if(root == null){
+            return res;
+        }
+        List<Integer> temp = new ArrayList<>();
+        temp.add(root.val);
+        backTracking(res,root,temp ,sum-root.val);
+        return res;
+
+    }
+    public void backTracking(List<List<Integer>> res, TreeNode root, List<Integer> temp, int sum){
+        if(root == null){
+            return;
+        }
+        if(sum == 0){
+            if(root.left == null && root.right == null) {
+                res.add(new ArrayList<>(temp));
+                return;
+            }
+        }
+        if(root.left != null) {
+            temp.add(root.left.val);
+            backTracking(res, root.left, temp, sum - root.left.val);
+            temp.remove(temp.size()-1);
+        }
+        if(root.right != null) {
+            temp.add(root.right.val);
+            backTracking(res, root.right, temp, sum - root.right.val);
+            temp.remove(temp.size() - 1);
+        }
     }
 }
