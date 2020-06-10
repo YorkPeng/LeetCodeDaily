@@ -1,9 +1,9 @@
 import java.util.LinkedList;
 
-public class Main {
+public class day0528 {
     public static void main(String[] args) {
-        Main main = new Main();
-        System.out.println(main.decodeString("2[abc]3[cd]ef"));
+        day0528 day0528 = new day0528();
+        System.out.println(day0528.decodeString("2[abc]3[cd]ef"));
     }
 
     /**

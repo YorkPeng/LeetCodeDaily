@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Main {
+public class day0531 {
 
     public class TreeNode {
         int val;
@@ -13,8 +13,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
-        System.out.println(main.longestOnes(new int[]{0,0,1,1,1,0,0}, 0));
+        day0531 day0531 = new day0531();
+        System.out.println(day0531.longestOnes(new int[]{0,0,1,1,1,0,0}, 0));
     }
 
     /**

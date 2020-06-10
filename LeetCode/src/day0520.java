@@ -1,9 +1,9 @@
 import java.util.Arrays;
 
-public class Main {
+public class day0520 {
     public static void main(String[] args) {
-        Main main = new Main();
-        System.out.println(main.findTheLongestSubstring("eleetminicoworoep"));
+        day0520 day0520 = new day0520();
+        System.out.println(day0520.findTheLongestSubstring("eleetminicoworoep"));
     }
 
     /**

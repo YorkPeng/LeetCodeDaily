@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class Main {
+public class day0606 {
     public class TreeNode {
         int val;
         TreeNode left;
@@ -12,8 +12,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
-        System.out.println(main.longestConsecutive(new int[]{100, 4, 200, 1, 3, 2}));
+        day0606 day0606 = new day0606();
+        System.out.println(day0606.longestConsecutive(new int[]{100, 4, 200, 1, 3, 2}));
     }
 
     /**

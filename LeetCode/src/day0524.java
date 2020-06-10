@@ -1,7 +1,7 @@
-public class Main {
+public class day0524 {
     public static void main(String[] args) {
-        Main main = new Main();
-        System.out.println(main.findMedianSortedArrays(new int[]{1,3},new int[]{2}));
+        day0524 day0524 = new day0524();
+        System.out.println(day0524.findMedianSortedArrays(new int[]{1,3},new int[]{2}));
     }
 
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {

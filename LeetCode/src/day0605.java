@@ -2,10 +2,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Main {
+public class day0605 {
     public static void main(String[] args) {
-        Main main = new Main();
-        System.out.println(Arrays.toString(main.spiralOrder(new int[][]{{1,2,3,4}, {5,6,7,8}, {9,10,11,12}})));
+        day0605 day0605 = new day0605();
+        System.out.println(Arrays.toString(day0605.spiralOrder(new int[][]{{1,2,3,4}, {5,6,7,8}, {9,10,11,12}})));
     }
     public int[] spiralOrder(int[][] matrix) {
         if(matrix.length == 0){

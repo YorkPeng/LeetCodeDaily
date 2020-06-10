@@ -1,7 +1,7 @@
-public class Main {
+public class day0526 {
     public static void main(String[] args) {
-        Main main = new Main();
-        System.out.println(main.findDuplicate(new int[]{3,1,3,4,2}));
+        day0526 day0526 = new day0526();
+        System.out.println(day0526.findDuplicate(new int[]{3,1,3,4,2}));
     }
 
     /**

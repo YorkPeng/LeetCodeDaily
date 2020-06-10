@@ -1,4 +1,4 @@
-public class Main {
+public class day0525 {
     public static void main(String[] args) {
         LRUCache2 cache = new LRUCache2(2);
         cache.put(1, 1);

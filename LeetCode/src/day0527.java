@@ -1,9 +1,9 @@
 import java.util.HashMap;
 
-public class Main {
+public class day0527 {
     public static void main(String[] args) {
-        Main main = new Main();
-        System.out.println(main.subarraysDivByK(new int[]{4,5,0,-2,-3,1},5));
+        day0527 day0527 = new day0527();
+        System.out.println(day0527.subarraysDivByK(new int[]{4,5,0,-2,-3,1},5));
     }
 
     /**

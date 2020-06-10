@@ -1,7 +1,7 @@
-public class Main {
+public class day0529 {
     public static void main(String[] args) {
-        Main main = new Main();
-        System.out.println(main.rob(new int[]{1,2,3,1}));
+        day0529 day0529 = new day0529();
+        System.out.println(day0529.rob(new int[]{1,2,3,1}));
     }
 
     /**

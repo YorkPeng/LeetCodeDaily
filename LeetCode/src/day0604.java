@@ -1,11 +1,10 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class Main {
+public class day0604 {
     public static void main(String[] args) {
-        Main main = new Main();
-        System.out.println(main.shipWithinDays(new int[]{1, 2, 3, 1, 1}, 5));
+        day0604 day0604 = new day0604();
+        System.out.println(day0604.shipWithinDays(new int[]{1, 2, 3, 1, 1}, 5));
     }
 
     /**

@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main {
+public class day0603 {
     public static void main(String[] args) {
-        Main main = new Main();
-        System.out.println(main.restoreIpAddresses("25525511135"));
+        day0603 day0603 = new day0603();
+        System.out.println(day0603.restoreIpAddresses("25525511135"));
     }
 
     /**

@@ -1,10 +1,9 @@
 import java.util.LinkedList;
-import java.util.List;
 
-public class Main {
+public class day0530 {
     public static void main(String[] args) {
-        Main main = new Main();
-        System.out.println(main.largestRectangleArea(new int[] {2,1,5,6,2,3}));
+        day0530 day0530 = new day0530();
+        System.out.println(day0530.largestRectangleArea(new int[] {2,1,5,6,2,3}));
     }
     // 明确单调栈能够解决的问题
 // 1.找右侧第一个更小 增栈

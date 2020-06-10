@@ -1,8 +1,7 @@
-import javax.swing.tree.TreeNode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Lc {
+public class day0530LC {
 
       public class TreeNode {
       int val;
@@ -12,8 +11,8 @@ public class Lc {
       }
 
     public static void main(String[] args) {
-        Lc lc_1431 = new Lc();
-        System.out.println(lc_1431.maxIncreaseKeepingSkyline(new int[][]{{3,0,8,4}, {2,4,5,7}, {9,2,6,3}, {0,3,1,0}}));
+        day0530LC day0530LC_1431 = new day0530LC();
+        System.out.println(day0530LC_1431.maxIncreaseKeepingSkyline(new int[][]{{3,0,8,4}, {2,4,5,7}, {9,2,6,3}, {0,3,1,0}}));
     }
 
     /**
