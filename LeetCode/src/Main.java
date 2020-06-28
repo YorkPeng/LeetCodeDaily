@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -105,7 +106,7 @@ public class Main {
             for(int j = 0; j < i; j++){
                 //注意！这里判断条件有两个，第一个是当前剪切下来的字符串在字典中是否存在
                 //第二个是要检查我们dp[j]就是我们的前一位字符是否被正确匹配，如果这个不成立
-                //本次的收缩边界就有一个地方留下了间隙，不予执行。
+                //说明我们可能重复利用了某个字符，这样会导致单词划分有了重复。
                 if(dp[j] && wordDict.contains(s.substring(j,i))){
                     dp[i] = true;
                     break;
@@ -115,4 +116,70 @@ public class Main {
         //返回最后那个位置的值
         return dp[s.length()];
     }
+
+    public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
+        boolean[] visited = new boolean[graph.length];
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
+        temp.add(0);
+        backTracking(graph,visited,0,res,temp);
+        return res;
+    }
+
+    public void backTracking(int[][] graph, boolean[] visited, int index, List<List<Integer>> res, List<Integer> temp){
+        if(visited[index]){
+            return;
+        }
+        if(graph[index].length == 0){
+            res.add(new ArrayList<>(temp));
+            return;
+        }
+        visited[index] = true;
+        for(int i = 0; i < graph[index].length; i++){
+            temp.add(graph[index][i]);
+            backTracking(graph,visited,graph[index][i],res,temp);
+            temp.remove(temp.size()-1);
+        }
+        visited[index] = false;
+    }
+
+    /**
+     * LC 209.长度最小的子数组
+     * 2020年6月28日
+     * @param s
+     * @param nums
+     * @return
+     */
+    public int minSubArrayLen(int s, int[] nums) {
+        //防止空测试用例出现
+        if(nums.length < 1){
+            return 0;
+        }
+        //使用滑动窗口思想，我们把慢指针调到-1,快指针从0开始
+        int slow = -1;
+        int fast = 0;
+        //记录当前滑动窗口内的和
+        int sum = 0;
+        //使用一个较大的数来进行初始化res结果
+        int res = nums.length+1;
+        //当前滑动窗口内的长度
+        int cur = 0;
+        while(fast < nums.length){
+            //累加和并且累加长度
+            sum += nums[fast++];
+            cur++;
+            //当慢指针比快指针小并且滑动窗口内的和大于等于s的时候，开始收缩滑动窗口
+            while(slow < fast && sum >= s){
+                //获取res和当前长度res中较小的值
+                res = Math.min(res,cur);
+                //这里由于我们slow从-1开始，要先自增再使用
+                sum -= nums[++slow];
+                //滑动窗口左边界收缩
+                cur--;
+            }
+        }
+        //注意，这里要增加一个判断，否则会出现整个数组都不满足大于等于s的条件而导致的输出错误。
+        return res == nums.length+1?0:res;
+    }
+
 }
