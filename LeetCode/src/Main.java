@@ -5,7 +5,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         Main main = new Main();
-        System.out.println(main.wordBreak("catsandog", Arrays.asList("cats", "dog", "sand", "and", "cat")));
+        System.out.println(main.findKthLargest(new int[]{7,6,5,4,3,2,1}, 5));
     }
 
     /**
@@ -181,5 +181,71 @@ public class Main {
         //注意，这里要增加一个判断，否则会出现整个数组都不满足大于等于s的条件而导致的输出错误。
         return res == nums.length+1?0:res;
     }
+
+    public String freqAlphabets(String s) {
+        StringBuilder sb = new StringBuilder();
+        char[] numToChar = new char[]{'0','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+        char[] str = s.toCharArray();
+        for(int i = 0; i < str.length; i++){
+            if(str[i] == '#'){
+                int num = 0;
+                for(int j = 0; j < 2; j++){
+                    num = num * 10 + Integer.parseInt(String.valueOf(s.charAt(i-2+j)));
+                    sb.deleteCharAt(sb.length()-1);
+                }
+                sb.append(numToChar[num]);
+            }else {
+                sb.append(numToChar[str[i] - '0']);
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
+     * LC 215. 数组中的第K个最大元素
+     * 2020-06-29每日一题
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int findKthLargest(int[] nums, int k) {
+        int left = 0;
+        int right = nums.length - 1;
+        int length = nums.length;
+        while(true){
+            int cur = helper(nums,left,right);
+            if(cur == length - k){
+                return nums[cur];
+            }else if( cur > length - k){
+                right = cur - 1;
+            }else{
+                left = cur + 1;
+            }
+        }
+    }
+
+    private int helper(int[] nums, int l, int r){
+        int left = l;
+        int right = r;
+        int flag = nums[left++];
+        while(left <= right){
+            while(left <= right && nums[right] >= flag){
+                right--;
+            }
+            while(left <= right && nums[left] < flag){
+                left++;
+            }
+            if(left >= right){
+                break;
+            }
+            int temp =  nums[right];
+            nums[right] = nums[left];
+            nums[left] = temp;
+        }
+        nums[l] = nums[right];
+        nums[right] = flag;
+        return right;
+    }
+
 
 }
