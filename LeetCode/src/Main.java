@@ -1,11 +1,9 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
         Main main = new Main();
-        System.out.println(main.findKthLargest(new int[]{7,6,5,4,3,2,1}, 5));
+        System.out.println(main.kthSmallest(new int[][]{{1, 5, 9}, {10, 11, 13}, {12, 13, 15}}, 8));
     }
 
     /**
@@ -273,5 +271,64 @@ public class Main {
         }
         return res;
     }
+
+
+    /**
+     * 
+     * 2020年7月2日 每日一题
+     * @param matrix
+     * @param k
+     * @return
+     */
+    public int kthSmallest(int[][] matrix, int k) {
+        PriorityQueue<Integer> queue = new PriorityQueue<>();
+        for (int[] ints : matrix) {
+            for (int anInt : ints) {
+                queue.add(anInt);
+            }
+        }
+        int res = 0;
+        int i = 0;
+        while(i <= k && !queue.isEmpty()){
+            res = queue.poll();
+            i++;
+        }
+        return res;
+    }
+
+    /**
+     * LC 44. 通配符匹配
+     * https://www.cnblogs.com/ZJPaang/p/13246795.html
+     * 2020年7月5日
+     * @param s
+     * @param p
+     * @return
+     */
+    public boolean isMatch(String s, String p) {
+        if(s.length() == 0 && p.length() == 0){
+            return true;
+        }
+        if(p.length() == 0){
+            return false;
+        }
+        boolean[][] dp = new boolean[p.length() + 1][s.length() + 1];
+        dp[0][0] = true;
+        for(int i = 1; i < dp.length; i++){
+            if(dp[i-1][0] && p.charAt(i-1) == '*'){
+                dp[i][0] = true;
+            }
+        }
+        for(int i = 1; i < dp.length; i++){
+            for(int j = 1; j < dp[i].length; j++){
+                if(p.charAt(i - 1) == '?' || p.charAt(i-1) == s.charAt(j-1)){
+                    dp[i][j] = dp[i-1][j-1];
+                }else if(p.charAt(i-1) == '*'){
+                    dp[i][j] = dp[i-1][j] || dp[i][j-1];
+                }
+            }
+        }
+        return dp[p.length()][s.length()];
+    }
+
 
 }
