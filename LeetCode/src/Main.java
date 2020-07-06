@@ -330,5 +330,40 @@ public class Main {
         return dp[p.length()][s.length()];
     }
 
+    /**
+     * LC 63.不同路径2
+     * 2020年7月6日
+     * 这个是个比较简单的动态规划题目。
+     * 如果当前位置不是障碍的话，就取其上方和左方的路径之和。否则什么都不做。
+     * @param obstacleGrid
+     * @return
+     */
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        if(obstacleGrid.length == 0){
+            return 0;
+        }
+        int[][] dp = new int[obstacleGrid.length][obstacleGrid[0].length];
+        for(int i = 0; i < dp.length; i++){
+            if(obstacleGrid[i][0] == 1){
+                break;
+            }
+            dp[i][0] = 1;
+        }
+        for(int i = 0; i < dp[0].length; i++){
+            if(obstacleGrid[0][i] == 1){
+                break;
+            }
+            dp[0][i] = 1;
+        }
+        for(int i = 1; i < dp.length; i++){
+            for(int j = 1; j < dp[i].length; j++){
+                if(obstacleGrid[i][j] == 0){
+                    dp[i][j] = dp[i-1][j] + dp[i][j-1];
+                }
+            }
+        }
+        return dp[dp.length-1][dp[0].length-1];
+    }
+
 
 }
