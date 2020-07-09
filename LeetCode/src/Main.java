@@ -3,7 +3,7 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Main main = new Main();
-        System.out.println(main.kthSmallest(new int[][]{{1, 5, 9}, {10, 11, 13}, {12, 13, 15}}, 8));
+        System.out.println(main.respace(new String[]{"looked", "just", "like", "her", "brother"}, "jesslookedjustliketimherbrother"));
     }
 
     /**
@@ -365,5 +365,43 @@ public class Main {
         return dp[dp.length-1][dp[0].length-1];
     }
 
+
+    /**
+     * 面试题17.13 恢复空格
+     * 很典型的区间DP问题，比较好理解，但是要注意第二重循环的目的。
+     * 2020年7月9日
+     * @param dictionary
+     * @param sentence
+     * @return
+     */
+    public int respace(String[] dictionary, String sentence){
+        //这个方法会在第65个测试用例中超时，因为我们的第二重循环出现了大量的不必要计算。我改成了第二种方法。
+/*        int[] dp = new int[sentence.length() + 1];
+        List<String> list = Arrays.asList(dictionary);
+        //当前访问的下标+1
+        for(int i = 1; i < sentence.length()+1; i++){
+            //当前截取的字符串长度
+            dp[i] = dp[i-1];
+            for(int j = 1; j <= i; j++){
+                if(list.contains(sentence.substring(i-j,i))){
+                    dp[i] = Math.max(dp[i-j] + j,dp[i]);
+                }
+            }
+        }
+        return sentence.length() - dp[dp.length-1];*/
+        int[] dp = new int[sentence.length() + 1];
+        //当前访问的下标+1
+        for(int i = 1; i < sentence.length()+1; i++){
+            //当前截取的字符串长度
+            dp[i] = dp[i-1];
+            for(String str : dictionary){
+                int length = str.length();
+                if(length <= i && str.equals(sentence.substring(i - length, i))){
+                    dp[i] =  Math.max(dp[i - length] + length,  dp[i]);
+                }
+            }
+        }
+        return sentence.length() - dp[dp.length-1];
+    }
 
 }
