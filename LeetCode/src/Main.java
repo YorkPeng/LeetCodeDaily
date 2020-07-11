@@ -3,7 +3,7 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Main main = new Main();
-        System.out.println(main.respace(new String[]{"looked", "just", "like", "her", "brother"}, "jesslookedjustliketimherbrother"));
+        System.out.println(main.countSmaller(new int[]{5, 2, 6, 1}));
     }
 
     /**
@@ -402,6 +402,56 @@ public class Main {
             }
         }
         return sentence.length() - dp[dp.length-1];
+    }
+
+    /**
+     * LC 315.计算右侧小于当前元素的个数
+     * 2020年7月11日
+     * @param nums
+     * @return
+     */
+    public List<Integer> countSmaller(int[] nums) {
+        List<Integer> list = new LinkedList<>();
+        if(nums.length == 0){
+            return list;
+        }
+        list.add(0);
+        if(nums.length == 1){
+            return list;
+        }
+        if(nums[nums.length-2] > nums[nums.length - 1]){
+            list.add(0,1);
+            int temp = nums[nums.length-1];
+            nums[nums.length-1] = nums[nums.length-2];
+            nums[nums.length-2] = temp;
+        }else{
+            list.add(0,0);
+        }
+        for(int i = nums.length - 3; i >= 0; i--){
+            int left = i+1;
+            int right = nums.length-1;
+            while(left <= right){
+                int mid = left + ((right - left) >> 1);
+                if(nums[i] > nums[mid]){
+                    left = mid + 1;
+                }else if(nums[i] < nums[mid]){
+                    right = mid - 1;
+                }else{
+                    while(mid >= left && nums[mid] == nums[i]){
+                        mid--;
+                    }
+                    right = mid;
+                    break;
+                }
+            }
+            int temp = nums[i];
+            for(int j = i; j < right; j++){
+                nums[j] = nums[j+1];
+            }
+            nums[right] = temp;
+            list.add(0,right - i);
+        }
+        return list;
     }
 
 }
