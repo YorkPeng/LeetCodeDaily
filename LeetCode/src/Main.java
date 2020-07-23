@@ -3,7 +3,7 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Main main = new Main();
-        System.out.println(main.countSmaller(new int[]{5, 2, 6, 1}));
+        System.out.println(main.orangesRotting(new int[][]{{2, 1, 1}, {1, 1, 0}, {0, 1, 1}}));
     }
 
     /**
@@ -452,6 +452,50 @@ public class Main {
             list.add(0,right - i);
         }
         return list;
+    }
+
+    public int orangesRotting(int[][] grid) {
+        int res = 0;
+        int good = 0;
+        for(int i = 0; i < grid.length; i++){
+            for(int j = 0; j < grid[i].length; j++){
+                if(grid[i][j] == 1){
+                    good++;
+                }
+            }
+        }
+        int lastBad = 2;
+        while(good > 0){
+            int pre = good;
+            for(int i = 0; i < grid.length; i++){
+                for(int j = 0; j < grid[i].length; j++){
+                    if(grid[i][j] == lastBad){
+                        if(i - 1 >= 0 && grid[i-1][j] == 1){
+                            grid[i-1][j] = lastBad+1;
+                            good--;
+                        }
+                        if(j - 1 >= 0 && grid[i][j-1] == 1){
+                            grid[i][j-1] = lastBad+1;
+                            good--;
+                        }
+                        if(i + 1 < grid.length && grid[i+1][j] == 1){
+                            grid[i+1][j] = lastBad+1;
+                            good--;
+                        }
+                        if(j + 1 < grid[i].length && grid[i][j+1] == 1){
+                            grid[i][j+1] = lastBad+1;
+                            good--;
+                        }
+                    }
+                }
+            }
+            res++;
+            lastBad++;
+            if(pre == good){
+                break;
+            }
+        }
+        return good == 0? res : -1;
     }
 
 }
