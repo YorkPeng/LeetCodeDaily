@@ -3,7 +3,7 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Main main = new Main();
-        System.out.println(main.orangesRotting(new int[][]{{2, 1, 1}, {1, 1, 0}, {0, 1, 1}}));
+        System.out.println(main.searchMatrix(new int[][]{{1, 3, 5, 7}, {10, 11, 16, 20}, {23, 30, 34, 50}}, 13));
     }
 
     /**
@@ -498,4 +498,100 @@ public class Main {
         return good == 0? res : -1;
     }
 
+    /**
+     * LC 18. 四数之和
+     * @param nums
+     * @param target
+     * @return
+     */
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> res = new ArrayList<>();
+        if(nums.length < 4){
+            return res;
+        }
+        Arrays.sort(nums);
+        //如果最小值比target大或者最大值比target小，说明不存在这种四数之和，直接返回
+        int minValue = nums[0] + nums[1] + nums[2] + nums[3];
+        int maxValue = nums[nums.length - 1] + nums[nums.length - 2] + nums[nums.length - 3] + nums[nums.length - 4];
+        if (minValue > target || maxValue < target) {
+            return res;
+        }
+        int i = 0;
+        while(i < nums.length - 3){
+            int j = i + 1;
+            while(j < nums.length - 2){
+                int num = target - nums[i] - nums[j];
+                int left = j + 1;
+                int right = nums.length - 1;
+                while(left < right){
+                    if(nums[left] + nums[right] < num){
+                        int temp = nums[left];
+                        while(left < nums.length - 1 && nums[left]  == temp){
+                            left++;
+                        }
+                    }else if(nums[left] + nums[right] > num){
+                        int temp =  nums[right];
+                        while(right > left && nums[right] == temp){
+                            right--;
+                        }
+                    }else if(nums[left]  + nums[right] == num){
+                        List<Integer> list = new ArrayList<>();
+                        list.add(nums[i]);
+                        list.add(nums[j]);
+                        list.add(nums[left]);
+                        list.add(nums[right]);
+                        res.add(list);
+                        int temp = nums[left];
+                        while(left < nums.length - 1 && nums[left]  == temp){
+                            left++;
+                        }
+                        temp = nums[right];
+                        while(right > left && nums[right] == temp){
+                            right--;
+                        }
+                    }
+                }
+                int temp = nums[j];
+                while(j < nums.length - 2 && nums[j] == temp){
+                    j++;
+                }
+            }
+            int temp = nums[i];
+            while(i < nums.length - 3 && nums[i] == temp){
+                i++;
+            }
+        }
+        return res;
+    }
+
+    public boolean searchMatrix(int[][] matrix, int target) {
+        if(matrix.length == 0){
+            return false;
+        }
+        if(target < matrix[0][0] || target > matrix[matrix.length - 1][matrix[0].length - 1]){
+            return false;
+        }
+        int index = 0;
+        while(index < matrix.length){
+            if(matrix[index][matrix[index].length - 1] < target){
+                index++;
+            }else{
+                break;
+            }
+        }
+        int left = 0;
+        int right = matrix[index].length - 1;
+        while(left < right){
+            int mid = left + ((right - left) >> 1);
+            if(matrix[index][mid] == target){
+                return true;
+            }else if(matrix[index][mid] < target){
+                left = mid + 1;
+            }else{
+                right = mid - 1;
+            }
+        }
+
+        return false;
+    }
 }
